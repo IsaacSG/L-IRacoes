@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cart {
+  id        Int        @id(map: "cart_pk") @default(autoincrement())
+  productId Int
+  quantity  Int
+  price     Int
+  products  products   @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "cart_fk0")
+  shopping  shopping[]
+}
+
+model products {
+  id         Int     @id(map: "products_pk") @default(autoincrement())
+  name       String
+  pictureURL String
+  buyPrice   Int
+  sellPrice  Int
+  cart       cart[]
+  stock      stock[]
+}
+
+model shopping {
+  id         Int  @id(map: "shopping_pk") @default(autoincrement())
+  userId     Int
+  cartId     Int
+  totalPrice Int
+  user       user @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "shopping_fk0")
+  cart       cart @relation(fields: [cartId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "shopping_fk1")
+}
+
+model stock {
+  id        Int      @id(map: "stock_pk") @default(autoincrement())
+  productId Int
+  quantity  Int
+  products  products @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "stock_fk0")
+}
+
+model user {
+  id       Int        @id(map: "user_pk") @default(autoincrement())
+  name     String
+  telefone String
+  email    String
+  adm      Boolean?   @default(false)
+  shopping shopping[]
+}
