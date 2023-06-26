@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import userRouter from "./Routes/userRoute";
+import userRouter from "./Routes/userRoute.js";
+import productRouter from "./Routes/productRoute.js";
 
 const server = express();
 
@@ -14,6 +15,7 @@ server.get("/health", (req, res) => {
 })
 
 server.use(userRouter);
+server.use(productRouter);
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {

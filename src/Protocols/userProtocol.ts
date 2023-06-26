@@ -1,3 +1,5 @@
+import { type } from "os"
+
 export type UserEntity = {
     id: number,
     nome: string,
@@ -6,6 +8,8 @@ export type UserEntity = {
     adm: boolean
 }
 
-export type User = Omit<UserEntity, "id, adm">
+type User1 = Omit<UserEntity, "id">
+
+export type User = Omit<User1, "adm">
 
 export type DellUser = Partial<UserEntity>

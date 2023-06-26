@@ -6,7 +6,7 @@ export async function postUser(newUser: User) {
 
     try {
         return prisma.user.create({
-            data: body
+            data : body
         });
     }
     catch (error) {
